@@ -35,11 +35,11 @@ public class DeliveryQuoteService {
     private BigDecimal feeFor(DeliveryProviderType provider, BigDecimal distanceKm) {
         BigDecimal includedKm = new BigDecimal("3");
         BigDecimal extraKm = distanceKm.subtract(includedKm).max(BigDecimal.ZERO);
-        return switch (provider) {
+        return (switch (provider) {
             case OWN_RIDER -> new BigDecimal("1.00").add(extraKm.multiply(new BigDecimal("0.20")));
             case GRAB -> new BigDecimal("2.20").add(extraKm.multiply(new BigDecimal("0.35")));
             case VIREAK_BUNTHAM -> new BigDecimal("3.00").add(extraKm.multiply(new BigDecimal("0.25")));
-        }.setScale(2, RoundingMode.HALF_UP);
+        }).setScale(2, RoundingMode.HALF_UP);
     }
     private BigDecimal distanceKm(BigDecimal lat1, BigDecimal lon1, BigDecimal lat2, BigDecimal lon2) {
         double p1 = Math.toRadians(lat1.doubleValue()), p2 = Math.toRadians(lat2.doubleValue());
